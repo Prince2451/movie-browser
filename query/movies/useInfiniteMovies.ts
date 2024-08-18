@@ -29,7 +29,6 @@ function useInfiniteMovies(options: UseInfiniteMoviesOptions) {
     queryKey: moviesKeys.moviesData(options),
     queryFn: _getMovies,
     getNextPageParam: (last) => {
-      console.log(last);
       if (last.totalPages <= last.page) return null;
       return last.page + 1;
     },

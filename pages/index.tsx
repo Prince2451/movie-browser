@@ -22,7 +22,6 @@ export default function MoviesPage() {
   const onScroll = useCallback(
     (e: Event) => {
       const threshold = 150;
-      console.log(hasNextPage, hasPreviousPage);
       if (
         window.innerHeight + window.scrollY >=
           document.body.offsetHeight - threshold &&
