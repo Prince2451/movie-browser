@@ -26,9 +26,11 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
             <Image
               src={movie.posterPath}
               alt="Poster"
-              objectFit="cover"
+              style={{
+                objectFit: "cover",
+                objectPosition: "center",
+              }}
               fill
-              objectPosition="center"
             />
           </Box>
         </Card.Section>
