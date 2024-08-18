@@ -1,9 +1,12 @@
-import { Button, Group } from "@mantine/core";
+import { Box, Button, Group } from "@mantine/core";
+import Head from "next/head";
 
 export default function IndexPage() {
   return (
-    <Group mt={50} justify="center">
-      <Button size="xl">Welcome to Mantine!</Button>
-    </Group>
+    <Box>
+      <Head>
+        <title>Browse Movies - List</title>
+      </Head>
+    </Box>
   );
 }
