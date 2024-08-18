@@ -341,6 +341,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.51.21":
+  version: 5.51.21
+  resolution: "@tanstack/query-core@npm:5.51.21"
+  checksum: 10c0/bb9e03391facd21c431d6571f3e088f47dc996b42a10ef636d3fd4444a483019d0e9bd4eb971d554bb4317ac3ee3ab23d5ce9221345753b792fb6fae030d1ad7
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.51.23":
+  version: 5.51.23
+  resolution: "@tanstack/react-query@npm:5.51.23"
+  dependencies:
+    "@tanstack/query-core": "npm:5.51.21"
+  peerDependencies:
+    react: ^18.0.0
+  checksum: 10c0/913566a6778197b0b6dd04416e7ccb2fc766b4c0d04b0dc7f0e10f2bb5dee5663688369e363ae129ccbc1844578f57c81ee7599fac7f3b90ab9611bc52a35e69
+  languageName: node
+  linkType: hard
+
 "@types/json5@npm:^0.0.29":
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
@@ -1601,6 +1619,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"flip-toolkit@npm:7.2.4":
+  version: 7.2.4
+  resolution: "flip-toolkit@npm:7.2.4"
+  dependencies:
+    rematrix: "npm:0.2.2"
+  checksum: 10c0/9ebb9a9a13bcd55f06beadbf62066178d89a73e48bbb14a8b704d27fc275abf0a979f9c7e5de9383067f8814d626f7a2d14d82f1d193872bd0823ab657ce559b
+  languageName: node
+  linkType: hard
+
 "for-each@npm:^0.3.3":
   version: 0.3.3
   resolution: "for-each@npm:0.3.3"
@@ -2470,6 +2497,7 @@ __metadata:
   dependencies:
     "@mantine/core": "npm:7.12.1"
     "@mantine/hooks": "npm:7.12.1"
+    "@tanstack/react-query": "npm:^5.51.23"
     "@types/node": "npm:20.14.8"
     "@types/react": "npm:18.3.3"
     "@types/react-dom": "npm:18.3.0"
@@ -2483,6 +2511,7 @@ __metadata:
     prettier: "npm:3.3.3"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
+    react-flip-toolkit: "npm:^7.2.4"
     typescript: "npm:5.5.2"
   languageName: unknown
   linkType: soft
@@ -3042,6 +3071,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-flip-toolkit@npm:^7.2.4":
+  version: 7.2.4
+  resolution: "react-flip-toolkit@npm:7.2.4"
+  dependencies:
+    flip-toolkit: "npm:7.2.4"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    react: ">= 16.x"
+    react-dom: ">= 16.x"
+  checksum: 10c0/096943a911340525f16c4441af82cbaeb38ba6ad9ea42c01c3c56230c939792e555f12e2f318ff4b03d253e23034d335fb2d797eb25f80ef2eec3ff7a85aba4d
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -3175,6 +3217,13 @@ __metadata:
     define-properties: "npm:^1.2.0"
     set-function-name: "npm:^2.0.0"
   checksum: 10c0/1de7d214c0a726c7c874a7023e47b0e27b9f7fdb64175bfe1861189de1704aaeca05c3d26c35aa375432289b99946f3cf86651a92a8f7601b90d8c226a23bcd8
+  languageName: node
+  linkType: hard
+
+"rematrix@npm:0.2.2":
+  version: 0.2.2
+  resolution: "rematrix@npm:0.2.2"
+  checksum: 10c0/b9b5a9ceee2fc684ae43c41f4e805109c4734c61859eea6dac6021ce980e7f3c4e914fe5e3561fe078f4134db59c190c7d42b89bea4c0fae95bbbae4792cbcb8
   languageName: node
   linkType: hard
 
