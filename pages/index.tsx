@@ -55,7 +55,6 @@ export default function MoviesPage() {
       const previousHeight = document.body.offsetHeight;
       fetchPreviousPage().then(() => {
         const changedHeight = document.body.offsetHeight - previousHeight;
-        console.log(changedHeight);
         window.scrollBy({ top: changedHeight });
       });
     }

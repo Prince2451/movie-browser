@@ -1,6 +1,15 @@
 import React from "react";
 import { Movie } from "../../../types/movies";
-import { Badge, Box, Card, Group, rem, Text } from "@mantine/core";
+import {
+  Badge,
+  Box,
+  Card,
+  Group,
+  rem,
+  Stack,
+  Text,
+  Tooltip,
+} from "@mantine/core";
 import Image from "next/image";
 import classes from "./movie-card.module.css";
 import { useHover } from "@mantine/hooks";
@@ -32,6 +41,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
                 objectPosition: "center",
               }}
               fill
+              unoptimized
             />
           </Box>
         </Card.Section>
@@ -43,10 +53,18 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
             style={{ overflow: "hidden" }}
             w="100%"
             wrap="nowrap"
+            align="flex-start"
           >
-            <Text fw={500} truncate>
-              {movie.title}
-            </Text>
+            <Box style={{ flexGrow: 1, overflow: "hidden" }}>
+              <Tooltip openDelay={500} label={movie.title}>
+                <Text fw={500} truncate>
+                  {movie.title}
+                </Text>
+              </Tooltip>
+              <Text fz="xs" c="dimmed" fw={500}>
+                {new Date(movie.releaseDate).getFullYear()}
+              </Text>
+            </Box>
             <Badge
               style={{ flexShrink: 0 }}
               radius="xs"
