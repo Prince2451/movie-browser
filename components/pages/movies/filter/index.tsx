@@ -13,8 +13,8 @@ import {
   Text,
 } from "@mantine/core";
 import React, { useState } from "react";
-import useMovieGenres from "../../../query/movies/useMovieGenres";
-import { MovieFilters } from "../../../types/movies";
+import useMovieGenres from "../../../../query/movies/useMovieGenres";
+import { MovieFilters } from "../../../../types/movies";
 import { Controller, useForm } from "react-hook-form";
 
 interface FilterProps {

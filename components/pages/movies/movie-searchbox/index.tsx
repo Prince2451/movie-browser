@@ -9,7 +9,7 @@ import {
   Text,
 } from "@mantine/core";
 import React from "react";
-import { Movie } from "../../../types/movies";
+import { Movie } from "../../../../types/movies";
 import classes from "./movie-searchbox.module.css";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
@@ -19,6 +19,7 @@ interface MovieSearchBoxProps extends ComboboxProps {
   loading?: boolean;
   data: Array<Movie>;
   onChange: (value: string) => void;
+  onClear?: () => void;
 }
 
 const MovieSearchBox: React.FC<MovieSearchBoxProps> = ({
@@ -26,20 +27,32 @@ const MovieSearchBox: React.FC<MovieSearchBoxProps> = ({
   loading,
   data,
   onChange,
+  onClear,
   ...props
 }) => {
   return (
     <Combobox {...props} width={"target"} withinPortal={false}>
       <Combobox.Target>
         <InputBase
-          rightSection={<FaSearch />}
+          rightSection={
+            !value ? (
+              <FaSearch />
+            ) : (
+              <Combobox.ClearButton
+                onClear={() => {
+                  onChange("");
+                  onClear?.();
+                }}
+              />
+            )
+          }
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onClick={() => props.store?.openDropdown()}
           onFocus={() => props.store?.openDropdown()}
           onBlur={() => props.store?.closeDropdown()}
           placeholder="Search movies..."
-          rightSectionPointerEvents="none"
+          rightSectionPointerEvents={!value ? "none" : "all"}
           w="100%"
         />
       </Combobox.Target>
@@ -60,6 +73,8 @@ const MovieSearchBox: React.FC<MovieSearchBoxProps> = ({
                 <Combobox.Empty>Loading....</Combobox.Empty>
               ) : !value ? (
                 <Combobox.Empty>Type to search movies</Combobox.Empty>
+              ) : !data.length ? (
+                <Combobox.Empty>No Results Found!</Combobox.Empty>
               ) : (
                 data.map((movie) => (
                   <Combobox.Option

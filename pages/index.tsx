@@ -3,9 +3,9 @@ import { useDisclosure } from "@mantine/hooks";
 import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 import Header from "../components/layout/header";
-import Filter from "../components/pages/filter";
-import PageHeader from "../components/pages/header";
-import MovieCard from "../components/pages/movie-card";
+import Filter from "../components/pages/movies/filter";
+import PageHeader from "../components/pages/movies/header";
+import MovieCard from "../components/pages/movies/movie-card";
 import useInfiniteMovies from "../query/movies/useInfiniteMovies";
 import { MovieFilters } from "../types/movies";
 import classes from "./index.module.css";
@@ -38,6 +38,10 @@ export default function MoviesPage() {
     fetchPreviousPage,
   } = query;
 
+  const createMovieId = (id: number) => {
+    return `movie-${id}`;
+  };
+
   const onScroll = useCallback(() => {
     const threshold = 250;
     if (
@@ -52,10 +56,12 @@ export default function MoviesPage() {
       hasPreviousPage &&
       !isFetchingPreviousPage
     ) {
-      const previousHeight = document.body.offsetHeight;
+      const targetId = movies[0]?.id; // first movie id
       fetchPreviousPage().then(() => {
-        const changedHeight = document.body.offsetHeight - previousHeight;
-        window.scrollBy({ top: changedHeight });
+        if (targetId) {
+          const element = document.getElementById(createMovieId(targetId));
+          if (element) element.scrollIntoView();
+        }
       });
     }
   }, [
@@ -65,6 +71,7 @@ export default function MoviesPage() {
     hasPreviousPage,
     isFetchingNextPage,
     isFetchingPreviousPage,
+    movies,
   ]);
 
   useEffect(() => {
@@ -96,15 +103,16 @@ export default function MoviesPage() {
             buttonVisibillity="dirty"
           />
         </Box>
-        <Box style={{ flexGrow: 1 }}>
+        <Box style={{ flexGrow: 1 }} w="100%">
           {(isFetchingPreviousPage || isLoading) && (
             <Center h={rem(100)} w="100%">
               <Loader />
             </Center>
           )}
-          <Grid>
+          <Grid w="100%">
             {movies.map((movie) => (
               <Grid.Col
+                id={createMovieId(movie.id)}
                 span={{
                   xs: 6,
                   sm: 4,

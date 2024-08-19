@@ -11,7 +11,7 @@ import { useDebouncedValue } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaFilter } from "react-icons/fa";
-import useMovieSearch from "../../../query/movies/useMovieSearch";
+import useMovieSearch from "../../../../query/movies/useMovieSearch";
 import MovieSearchBox from "../movie-searchbox";
 import classes from "./header.module.css";
 
@@ -51,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({ onFilterOpen }) => {
       </Title>
       <Box w="50%" maw={rem(400)} visibleFrom="sm">
         <MovieSearchBox
-          store={combobox}
+          store={isSearchVisible ? undefined : combobox}
           value={search}
           onChange={setSearch}
           loading={isLoading || search !== searchVal}
@@ -60,13 +60,16 @@ const Header: React.FC<HeaderProps> = ({ onFilterOpen }) => {
       </Box>
       <Box hiddenFrom="lg" style={{ flexGrow: isSearchVisible ? 1 : 0 }}>
         {isSearchVisible ? (
-          <MovieSearchBox
-            store={combobox}
-            value={search}
-            onChange={setSearch}
-            loading={isLoading || search !== searchVal}
-            data={movies}
-          />
+          <Box hiddenFrom="sm">
+            <MovieSearchBox
+              store={combobox}
+              value={search}
+              onChange={setSearch}
+              loading={isLoading || search !== searchVal}
+              data={movies}
+              onClear={() => setIsSearchVisible(false)}
+            />
+          </Box>
         ) : (
           <Group wrap="nowrap" w="100%">
             <ActionIcon

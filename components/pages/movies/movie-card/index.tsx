@@ -1,5 +1,5 @@
 import React from "react";
-import { Movie } from "../../../types/movies";
+import { Movie } from "../../../../types/movies";
 import {
   Badge,
   Box,
