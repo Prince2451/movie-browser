@@ -1,0 +1,15 @@
+.flexbox {
+  @media (min-width: $mantine-breakpoint-lg) {
+    padding-left: rem(300px);
+  }
+}
+
+.filter {
+  @media (min-width: $mantine-breakpoint-lg) {
+    width: rem(300px);
+    position: fixed;
+    top: var(--app-shell-header-height);
+    margin: var(--mantine-spacing-md);
+    left: 0;
+  }
+}

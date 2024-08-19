@@ -2,7 +2,6 @@ import "@mantine/core/styles.css";
 import Head from "next/head";
 import { AppShell, Box, Container, MantineProvider } from "@mantine/core";
 import { theme } from "../theme";
-import Header from "../components/layout/header";
 import { Inter } from "next/font/google";
 import { AppProps } from "next/app";
 import {
@@ -41,7 +40,10 @@ export default function App({ Component, pageProps }: AppProps) {
             }}
           >
             <AppShell.Header>
-              <Header />
+              <nav
+                style={{ height: "100%", width: "100%" }}
+                id="app__header"
+              ></nav>
             </AppShell.Header>
             <AppShell.Main>
               <Container size={2000} mt="sm">

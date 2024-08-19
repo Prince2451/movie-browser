@@ -1,14 +1,14 @@
-import { Box, Center, Flex, Grid, Loader, rem } from "@mantine/core";
-import { dehydrate } from "@tanstack/react-query";
-import { GetStaticProps } from "next";
+import { Box, Center, Flex, Grid, Loader, Modal, rem } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import Head from "next/head";
-import MovieCard from "../components/pages/movie-card";
-import useInfiniteMovies, {
-  ssrPrefetchInfiniteMovies,
-} from "../query/movies/useInfiniteMovies";
 import { useCallback, useEffect, useState } from "react";
+import Header from "../components/layout/header";
 import Filter from "../components/pages/filter";
+import PageHeader from "../components/pages/header";
+import MovieCard from "../components/pages/movie-card";
+import useInfiniteMovies from "../query/movies/useInfiniteMovies";
 import { MovieFilters } from "../types/movies";
+import classes from "./index.module.css";
 
 export default function MoviesPage() {
   const [filters, setFilters] = useState<MovieFilters>({
@@ -16,9 +16,14 @@ export default function MoviesPage() {
     rating: [0, 10],
     yearRange: [1970, new Date().getFullYear()],
   });
+  const [isFilterOpen, filterOpenHandlers] = useDisclosure();
   const { movies, query } = useInfiniteMovies({
-    "releaseDate.gte": filters.yearRange[0].toString(),
-    "releaseDate.lte": filters.yearRange[1].toString(),
+    "releaseDate.gte": new Date(filters.yearRange[0]).toISOString(),
+    "releaseDate.lte": new Date(
+      filters.yearRange[1],
+      new Date().getMonth(),
+      new Date().getDate(),
+    ).toISOString(),
     "voteAverage.gte": filters.rating[0].toString(),
     "voteAverage.lte": filters.rating[1].toString(),
     withGenres: filters.genre.join("|"),
@@ -28,6 +33,7 @@ export default function MoviesPage() {
     hasPreviousPage,
     isFetchingNextPage,
     isFetchingPreviousPage,
+    isLoading,
     fetchNextPage,
     fetchPreviousPage,
   } = query;
@@ -74,12 +80,25 @@ export default function MoviesPage() {
       <Head>
         <title>Browse Movies - List</title>
       </Head>
-      <Flex>
-        <Box px="sm" style={{ flexShrink: 0 }} w={rem(300)}>
-          <Filter values={filters} onChange={setFilters} />
+      <Header>
+        <PageHeader onFilterOpen={filterOpenHandlers.open} />
+      </Header>
+      <Flex className={classes.flexbox}>
+        <Box
+          className={classes.filter}
+          visibleFrom="lg"
+          px="sm"
+          style={{ flexShrink: 0 }}
+          w={rem(300)}
+        >
+          <Filter
+            values={filters}
+            onChange={setFilters}
+            buttonVisibillity="dirty"
+          />
         </Box>
-        <Box>
-          {isFetchingPreviousPage && (
+        <Box style={{ flexGrow: 1 }}>
+          {(isFetchingPreviousPage || isLoading) && (
             <Center h={rem(100)} w="100%">
               <Loader />
             </Center>
@@ -107,6 +126,21 @@ export default function MoviesPage() {
           )}
         </Box>
       </Flex>
+      <Modal
+        centered
+        opened={isFilterOpen}
+        onClose={filterOpenHandlers.close}
+        title="Filter Movies"
+      >
+        <Filter
+          values={filters}
+          onCancel={filterOpenHandlers.close}
+          onChange={(values) => {
+            setFilters(values);
+            filterOpenHandlers.close();
+          }}
+        />
+      </Modal>
     </Box>
   );
 }

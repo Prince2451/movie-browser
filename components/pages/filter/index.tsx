@@ -19,10 +19,17 @@ import { Controller, useForm } from "react-hook-form";
 
 interface FilterProps {
   values: MovieFilters;
+  buttonVisibillity?: "dirty" | "always";
   onChange: (value: FilterProps["values"]) => void;
+  onCancel?: () => void;
 }
 
-const Filter: React.FC<FilterProps> = ({ values, onChange }) => {
+const Filter: React.FC<FilterProps> = ({
+  values,
+  buttonVisibillity = "always",
+  onChange,
+  onCancel,
+}) => {
   const {
     control,
     handleSubmit,
@@ -76,7 +83,7 @@ const Filter: React.FC<FilterProps> = ({ values, onChange }) => {
           />
 
           <Box>
-            <Text mb="xs">Choose Realease Year</Text>
+            <Text mb="xl">Choose Realease Year</Text>
             <Controller
               name="yearRange"
               control={control}
@@ -86,13 +93,14 @@ const Filter: React.FC<FilterProps> = ({ values, onChange }) => {
                   max={new Date().getFullYear()}
                   step={1}
                   minRange={1}
+                  labelAlwaysOn
                   {...field}
                 />
               )}
             />
           </Box>
           <Box>
-            <Text mb="xs">Choose Ratings</Text>
+            <Text mb="xl">Choose Ratings</Text>
             <Controller
               name="rating"
               control={control}
@@ -102,17 +110,21 @@ const Filter: React.FC<FilterProps> = ({ values, onChange }) => {
                   max={10}
                   step={1}
                   minRange={1}
+                  labelAlwaysOn
                   {...field}
                 />
               )}
             />
           </Box>
-          {isDirty && (
+          {(buttonVisibillity === "dirty" ? isDirty : true) && (
             <Group wrap="nowrap" grow>
               <Button
                 type="button"
                 variant="light"
-                onClick={() => reset(values)}
+                onClick={() => {
+                  reset(values);
+                  onCancel?.();
+                }}
               >
                 Cancel
               </Button>

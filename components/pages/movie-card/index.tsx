@@ -1,9 +1,10 @@
 import React from "react";
 import { Movie } from "../../../types/movies";
-import { Box, Card, Group, rem, Text } from "@mantine/core";
+import { Badge, Box, Card, Group, rem, Text } from "@mantine/core";
 import Image from "next/image";
 import classes from "./movie-card.module.css";
 import { useHover } from "@mantine/hooks";
+import { FaStar } from "react-icons/fa";
 
 interface MovieCardProps {
   movie: Movie;
@@ -41,10 +42,18 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
             mb="xs"
             style={{ overflow: "hidden" }}
             w="100%"
+            wrap="nowrap"
           >
             <Text fw={500} truncate>
               {movie.title}
             </Text>
+            <Badge
+              style={{ flexShrink: 0 }}
+              radius="xs"
+              rightSection={<FaStar />}
+            >
+              {movie.voteAverage.toFixed(1)}
+            </Badge>
           </Group>
 
           <Text size="sm" c="dimmed" lineClamp={5}>
