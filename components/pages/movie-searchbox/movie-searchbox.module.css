@@ -1,0 +1,11 @@
+.dropdown > div > div {
+  /* Issue with ScrollArea.Autosize need to target this as scrollArea itself adds 2 parent divs */
+  width: 100%;
+}
+
+.scrollArea > div {
+  /* changing scrollArea behavior 
+  as it creates issue with x scrollbar
+  */
+  display: block !important;
+}

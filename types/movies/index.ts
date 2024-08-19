@@ -31,3 +31,9 @@ export interface Movie {
   voteAverage: number;
   voteCount: number;
 }
+
+export interface MovieFilters {
+  genre: Array<string>;
+  yearRange: [number, number];
+  rating: [number, number];
+}

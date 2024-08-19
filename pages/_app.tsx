@@ -1,6 +1,6 @@
 import "@mantine/core/styles.css";
 import Head from "next/head";
-import { AppShell, Box, MantineProvider } from "@mantine/core";
+import { AppShell, Box, Container, MantineProvider } from "@mantine/core";
 import { theme } from "../theme";
 import Header from "../components/layout/header";
 import { Inter } from "next/font/google";
@@ -44,9 +44,9 @@ export default function App({ Component, pageProps }: AppProps) {
               <Header />
             </AppShell.Header>
             <AppShell.Main>
-              <Box mt="sm">
+              <Container size={2000} mt="sm">
                 <Component {...pageProps} />
-              </Box>
+              </Container>
             </AppShell.Main>
           </AppShell>
         </HydrationBoundary>

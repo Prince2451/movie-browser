@@ -4,6 +4,11 @@ import apiUrls from "./apiUrls";
 
 export interface GetMovieRequest extends Record<string, string> {
   page: string;
+  with_genres: string;
+  "vote_average.gte": string;
+  "vote_average.lte": string;
+  "release_date.gte": string;
+  "release_date.lte": string;
 }
 
 interface GetMovieApiResponse {
@@ -35,6 +40,13 @@ interface SearchMovieRespone {
   results: Array<Movie>;
   totalPages: number;
   totalResults: number;
+}
+
+interface MovieGenreResponse {
+  genres: Array<{
+    id: number;
+    name: string;
+  }>;
 }
 
 async function getMovies(
@@ -105,4 +117,14 @@ async function searchMovie(
   };
 }
 
-export { getMovies, searchMovie };
+async function movieGenres(): Promise<MovieGenreResponse> {
+  const res = await fetch(`${apiUrls.movies.genres}`, {
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
+    },
+  });
+  const data: MovieGenreResponse = await res.json();
+  return data;
+}
+
+export { getMovies, searchMovie, movieGenres };

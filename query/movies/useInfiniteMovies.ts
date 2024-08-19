@@ -9,7 +9,13 @@ import { moviesKeys } from "./keys";
 import { useMemo } from "react";
 import { Movie } from "../../types/movies";
 
-export type UseInfiniteMoviesOptions = Omit<GetMovieRequest, "page">;
+export type UseInfiniteMoviesOptions = {
+  withGenres: string;
+  "voteAverage.gte": string;
+  "voteAverage.lte": string;
+  "releaseDate.gte": string;
+  "releaseDate.lte": string;
+};
 
 async function _getMovies(
   context: QueryFunctionContext<
@@ -19,7 +25,11 @@ async function _getMovies(
 ) {
   const data = await getMovies({
     page: context.pageParam.toString(),
-    ...context.queryKey[1],
+    "release_date.gte": context.queryKey[1]["releaseDate.gte"],
+    "release_date.lte": context.queryKey[1]["releaseDate.lte"],
+    "vote_average.gte": context.queryKey[1]["voteAverage.gte"],
+    "vote_average.lte": context.queryKey[1]["voteAverage.lte"],
+    with_genres: context.queryKey[1].withGenres,
   });
   return data;
 }

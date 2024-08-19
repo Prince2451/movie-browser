@@ -13,7 +13,7 @@ async function _searchMovies(
   context: QueryFunctionContext<ReturnType<typeof moviesKeys.search>>,
 ) {
   const data = await searchMovie({
-    ...context.queryKey[1],
+    ...context.queryKey[2],
   });
   return data;
 }
