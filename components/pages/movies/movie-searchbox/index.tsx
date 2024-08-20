@@ -1,5 +1,6 @@
 import {
   Box,
+  CloseButton,
   Combobox,
   ComboboxProps,
   Group,
@@ -36,13 +37,13 @@ const MovieSearchBox: React.FC<MovieSearchBoxProps> = ({
         <InputBase
           rightSection={
             !value ? (
-              <FaSearch />
+              <FaSearch aria-label="Search" />
             ) : (
-              <Combobox.ClearButton
-                onClear={() => {
-                  onChange("");
-                  onClear?.();
-                }}
+              <CloseButton
+                size="sm"
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => onChange("")}
+                aria-label="Clear value"
               />
             )
           }

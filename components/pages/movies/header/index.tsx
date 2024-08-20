@@ -23,6 +23,7 @@ const Header: React.FC<HeaderProps> = ({ onFilterOpen }) => {
   const [search, setSearch] = useState("");
   const [searchVal] = useDebouncedValue(search, 800);
   const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [debSearchVisible] = useDebouncedValue(isSearchVisible, 300);
   const {
     movies,
     query: { isLoading },
@@ -59,39 +60,44 @@ const Header: React.FC<HeaderProps> = ({ onFilterOpen }) => {
         />
       </Box>
       <Box hiddenFrom="lg" style={{ flexGrow: isSearchVisible ? 1 : 0 }}>
-        {isSearchVisible ? (
-          <Box hiddenFrom="sm">
-            <MovieSearchBox
-              store={combobox}
-              value={search}
-              onChange={setSearch}
-              loading={isLoading || search !== searchVal}
-              data={movies}
-              onClear={() => setIsSearchVisible(false)}
-            />
-          </Box>
-        ) : (
-          <Group wrap="nowrap" w="100%">
+        <Group wrap="nowrap" w="100%">
+          {isSearchVisible ? (
+            <Box hiddenFrom="sm" style={{ flexGrow: 1 }}>
+              <MovieSearchBox
+                store={combobox}
+                value={search}
+                onChange={setSearch}
+                loading={isLoading || search !== searchVal}
+                data={movies}
+                onClear={() => setIsSearchVisible(false)}
+              />
+            </Box>
+          ) : (
             <ActionIcon
               variant="subtle"
               color="gray"
-              onClick={() => setIsSearchVisible(true)}
+              onClick={
+                () =>
+                  debSearchVisible === isSearchVisible &&
+                  setIsSearchVisible(true)
+                // Waiting for debounded value to settle to fix mobile double clicking
+              }
               size="lg"
               hiddenFrom="sm"
             >
               <FaSearch />
             </ActionIcon>
-            <ActionIcon
-              variant="subtle"
-              color="gray"
-              onClick={onFilterOpen}
-              size="lg"
-              hiddenFrom="lg"
-            >
-              <FaFilter />
-            </ActionIcon>
-          </Group>
-        )}
+          )}
+          <ActionIcon
+            variant="subtle"
+            color="gray"
+            onClick={onFilterOpen}
+            size="lg"
+            hiddenFrom="lg"
+          >
+            <FaFilter />
+          </ActionIcon>
+        </Group>
       </Box>
     </Flex>
   );
